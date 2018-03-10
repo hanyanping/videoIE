@@ -1,0 +1,105 @@
+.header{
+    background: #fff;
+    width:100%;
+    padding:2px 15%;
+    margin: 0 auto;
+    height: 70px;
+}
+.headerText{
+    color: #555555;
+    font-size: 18px;
+    margin-left: 15px;
+    display: inline-block;
+    margin-top: 25px;
+}
+.headerText span{
+    padding-right:10px;
+}
+.header img{
+    height: 40px;
+    width: 115px;
+}
+.loginContent{
+    height:100vh;
+    background: #fff;
+    width: 100%;
+    padding: 20px 15%;
+}
+.loginLeft{
+    background: url("../../image/login.png") center 20px no-repeat;
+    width: 50%;
+    height: 400px;
+}
+.loginRight{
+    margin: 80px 15px 0 15px;
+    height: 400px;
+}
+.loginRight .loginInput{
+    margin: 15px;
+    position: relative;
+    box-sizing: border-box;
+}
+.loginRight input{
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 40px;
+    padding-right: 24px;
+    width: 260px;
+}
+.loginRight .codeInput{
+    width: 146px;
+}
+.loginInput>i {
+    position: absolute;
+    top: 7px;
+    left: 16px;
+}
+.loginCode i{
+    top: 10px;
+}
+.loginCode .codeImg{
+    height: 40px;
+    width: 110px;
+    position: absolute;
+    margin-left: 5px;
+}
+.loginButton{
+    width: 280px;
+    margin: 10px;
+}
+.loginButton .loginText{
+    color: #fff;
+    border-radius:4px;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+}
+.footerText{
+    text-align: center;
+    color:#bbb;
+}
+
+.rotateBox {
+    position: absolute;
+    left: 273px;
+    top: 12px;
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    transition: All 1s ease-in-out;
+    -webkit-transition: All 1s ease-in-out;
+    -moz-transition: All 1s ease-in-out;
+    -o-transition: All 1s ease-in-out;
+}
+
+.rotateBoxClick{
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+}

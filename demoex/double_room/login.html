@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>双人音视频</title>
+    <link href="css/room.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <script type="text/javascript" src="./js/jquery-1.11.1.min.js" charset="utf-8"></script>
+</head>
+<body>
+<div>
+    <div class="toast-wrap">
+        <span class="toast-msg"></span>
+    </div>
+    <div class="header" style="font-size: 85%;">
+        <div style="display: flex;border-bottom:1px solid #bbb;padding-bottom:15px;">
+            <img style="margin-top:10px;" src="../image/logo.png"/>
+            <span class="headerText">  <span>|</span>事故e处理-视频查勘定损坐席平台</span>
+        </div>
+
+    </div>
+    <div class="loginContent">
+        <div style="display: flex;">
+            <div class="loginLeft"></div>
+            <div class="loginRight">
+                <div class="loginInput">
+                    <i><img src="../image/dl3.png"/></i>
+                    <input class="userInput" type="text" placeholder="请输入用户名"/>
+                </div>
+                <div class="loginInput">
+                    <i><img src="../image/dl2.png"/></i>
+                    <input class="passwordInput" type="password" maxlength="80" v-model="userpwd" placeholder="请输入密码"/>
+                </div>
+                <div class="loginInput loginCode">
+                    <i><img src="../image/dl1.png"/></i>
+                    <input class="codeInput"  type="text" placeholder="请输入验证码"/>
+                    <img class="codeImg"  src=""/><span @click="refreshCode()" class="el-icon-refresh rotateBox"></span>
+                </div>
+                <div class="loginButton">
+                    <span class="backColorGreen loginText" onclick="loginIn()">登录</span>
+                </div>
+            </div>
+        </div>
+        <div class="footerText"> 北京中车宝联科技有限责任公司 ©2015-2018</div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var ajaxUrl = 'https://survey.zhongchebaolian.com/boot-pub-survey-video';
+//    var ajaxUrl = 'http://192.168.1.18:9080/boot-pub-survey-video'
+    getCode()
+    function getCode(){
+        $(".codeImg").attr("src",ajaxUrl +"/pubsurvey/manage/login/v1/imgcode")
+//        $.ajax({
+//            type: "get",
+//            contentType : "application/json;charset=utf-8",
+//            url: ajaxUrl +"/pubsurvey/manage/login/v1/imgcode",
+//            success:function(response){
+//                $(".codeImg").attr("src",ajaxUrl +"/pubsurvey/manage/login/v1/imgcode")
+//            },
+//            error: function(XMLHttpRequest, textStatus, errorThrown) {
+//            }
+//        });
+    }
+//吐司
+    function toast(msg){
+        setTimeout(function(){
+            document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML=msg;
+            var toastTag = document.getElementsByClassName('toast-wrap')[0];
+            toastTag.className = toastTag.className.replace('toastAnimate','');
+            setTimeout(function(){
+                toastTag.className = toastTag.className + ' toastAnimate';
+            }, 100);
+        },500);
+    }
+    function loginIn() {
+        var username = $(".userInput").val();
+        var userpwd = $(".passwordInput").val();
+        var valicode = $(".codeInput").val();
+        var paramData = {
+            "username": username,
+            "userpwd":  userpwd,
+            "valicode": valicode
+        }
+        paramData = JSON.stringify(paramData)
+        if(username == ""){
+            toast("请输入用户名")
+        }else if(userpwd == ""){
+            toast("请输入密码")
+        }else if( valicode == ""){
+            toast("请输入验证码")
+        }else{
+            $.ajax({
+                type: "post",
+                data: paramData,
+                dataType:"json",
+                contentType : "application/json;charset=utf-8",
+                xhrFields: {
+                    withCredentials: true
+                },
+                url: ajaxUrl +"/pubsurvey/manage/login/v1/login",
+                success:function(response){
+                    console.log(response)
+                    if(response.rescode == 200){
+                        localStorage.setItem('A',"2")
+                        localStorage.setItem('insurecode',response.data.insurecode);
+                        localStorage.setItem('orgCode',response.data.organizationCode);
+                        localStorage.setItem('chinaName',response.data.organizationName);
+                        localStorage.setItem('userName',response.data.username);
+                        localStorage.setItem('userId',response.data.userId);
+                        window.location.href = './DoubleRoomIndex';
+                    }else {
+                        toast(response.resdes);
+
+                        $(".codeInput").val('');
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+    }
+</script>
